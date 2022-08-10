@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
 var session = require('express-session');
-var MongoStore = require("connect-mongo")(session);
+var MongoStore = require("connect-mongo");
 require('dotenv').config();
 
 
@@ -13,7 +13,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 // connect to database
-mongoose.connect('mongodb://localhost:27017/sample', (err) => {
+mongoose.connect('mongodb://localhost:27017/sample2', (err) => {
   console.log(err ? err : 'Connected to database');
 });
 
@@ -32,10 +32,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // add session
 app.use(session({
-   secret: process.env.SECRET,
+   secret: "some random secret",
    resave: false,
    saveUninitialized: false,
-   store: new MongoStore({ mongooseConnection: mongoose.connection })
+   store: MongoStore.create({ mongoUrl: 'mongodb://localhost:27017/sample2' })
 }));
 
 app.use('/', indexRouter);

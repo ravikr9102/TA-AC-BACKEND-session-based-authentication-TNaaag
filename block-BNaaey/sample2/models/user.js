@@ -16,7 +16,7 @@ userSchema.pre('save', function(next){
         bcrypt.hash(this.password,10,(err,hashed) => {
             if(err) return next(err);
             this.password = hashed;
-            next();
+           return next();
         })
     } else{
         next();
@@ -26,7 +26,7 @@ userSchema.pre('save', function(next){
 
 userSchema.methods.verifyPassword = function(password,cb) {
     bcrypt.compare(password,this.password,(err,result) => {
-        return cb(err,result)
+        return cb(err,result);
     })
 }
 

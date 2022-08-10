@@ -5,7 +5,7 @@ var User = require('../models/user');
 /* GET users listing. */
 router.get('/', function (req, res, next) {
   console.log(req.session);
-  res.send('respond with a resource');
+  res.render('users');
 });
 
 router.get('/register', (req, res, next) => {
@@ -21,13 +21,15 @@ router.post('/register', async (req, res, next) => {
   }
 });
 
+
 router.get('/login', (req, res, next) => {
   res.render('login');
 });
 
+
+
 router.post('/login',(req,res,next) => {
   var { email, password } = req.body;
-  console.log(email,password)
   if(!email || !password) {
    return res.redirect('/users/login')
   }
@@ -45,7 +47,7 @@ router.post('/login',(req,res,next) => {
       req.session.userId = user.id;
       res.redirect('/users')
     })
-  })
+  });
 });
 
 module.exports = router;
